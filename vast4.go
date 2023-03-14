@@ -49,7 +49,7 @@ type Verification struct {
 	TrackingEvents []Tracking `xml:"TrackingEvents>Tracking,omitempty"`
 	// <VerificationParameters> contains a CDATA-wrapped string intended for bootstrapping the verification code and providing metadata about the current impression.
 	// The format of the string is up to the individual vendor and should be passed along verbatim.
-	VerificationParameters string `xml:",omitempty"`
+	VerificationParameters CDATAString `xml:",omitempty"`
 	// ad categories are used in creative separation and for compliance in certain programs
 	BlockedAdCategories []Category `xml:",omitempty"`
 }

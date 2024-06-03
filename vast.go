@@ -83,7 +83,7 @@ type InLine struct {
 	// The container for one or more <Creative> elements
 	Creatives []Creative `xml:"Creatives>Creative"`
 	// A string value that provides a longer description of the ad.
-	Description *CDATAString `xml:",omitempty" json:",omitempty"`
+	Description string `xml:",omitempty" json:",omitempty"`
 	// The name of the advertiser as defined by the ad serving party.
 	// This element can be used to prevent displaying ads with advertiser
 	// competitors. Ad serving parties and publishers should identify how
@@ -112,7 +112,7 @@ type InLine struct {
 	// which list the resources and metadata required to execute third-party measurement code in order to verify creative playback.
 	// The <AdVerifications> element is used to contain one or more <Verification> elements,
 	// which are used to initiate a controlled container where code can be executed for collecting data to verify ad playback details.
-	AdVerifications []Verification `xml:",omitempty" json:",omitempty"`
+	AdVerifications []Verification `xml:"AdVerifications>Verification,omitempty" json:",omitempty"`
 	// Provides a value that represents a price that can be used by real-time bidding
 	// (RTB) systems. VAST is not designed to handle RTB since other methods exist,
 	// but this element is offered for custom solutions if needed.

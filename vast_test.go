@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"github.com/pquerna/ffjson/ffjson"
 	"io/ioutil"
 	"os"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/pquerna/ffjson/ffjson"
 )
 
 func TestQuickStartComplex(t *testing.T) {
@@ -33,7 +34,7 @@ func TestQuickStartComplex(t *testing.T) {
 						{Authority: "https://www.iabtechlab.com/categoryauthority", Category: "American Cuisine"},
 						{Authority: "https://www.iabtechlab.com/categoryauthority", Category: "Guitar"},
 					},
-					Description: &CDATAString{"123"},
+					Description: "123",
 					ViewableImpression: &ViewableImpression{
 						ID: "1234",
 						Viewable: &[]CDATAString{
@@ -355,6 +356,41 @@ func TestCreateVastXML(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("\ngot  %s \nwant %s", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestVerificationUnmarshal(t *testing.T) {
+	tests := []struct {
+		name    string
+		want    InLine
+		wantErr bool
+	}{
+		{name: "testCase1", want: InLine{
+			AdVerifications: []Verification{
+				{
+					Vendor: "iabtechlab.com-omid",
+					JavaScriptResource: []JavaScriptResource{{
+						ApiFramework: "omid",
+						URI:          "https://vasttester.iabtechlab.com/fixtures/omid/omid-validation-verification-script-v1.js",
+					}},
+				},
+			},
+		},
+			wantErr: false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			v := InLine{}
+			err := xml.Unmarshal([]byte(`<InLine><AdVerifications><Verification vendor="iabtechlab.com-omid"><JavaScriptResource apiFramework="omid"><![CDATA[https://vasttester.iabtechlab.com/fixtures/omid/omid-validation-verification-script-v1.js]]></JavaScriptResource></Verification></AdVerifications></InLine>`), &v)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Marshal() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(v, tt.want) {
+				t.Errorf("\ngot  %+v \nwant %+v", v, tt.want)
 			}
 		})
 	}

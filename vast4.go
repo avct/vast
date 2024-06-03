@@ -60,7 +60,7 @@ type JavaScriptResource struct {
 	ApiFramework string `xml:"apiFramework,attr"`
 	// If "true", this resource is optimized and able to execute in
 	// an environment without DOM and other browser built-ins (e.g. iOS' JavaScriptCore).
-	BrowserOptional bool `xml:"browserOptional,attr"`
+	BrowserOptional bool `xml:"browserOptional,attr,omitempty"`
 	// A CDATA-wrapped URI to a file providing Closed Caption info for the media file.
 	URI string `xml:",cdata"`
 }
